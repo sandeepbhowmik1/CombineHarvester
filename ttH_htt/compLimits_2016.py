@@ -3,12 +3,15 @@ import os, subprocess, sys
 channels = [
   ##"1l_2tau_LLR",
   ##"1l_2tau_ND",
-  "1l_2tau_Tallinn",
+  #"1l_2tau_Tallinn",
   ##"2lss_1tau_Cornell",
   ##"2lss_1tau_LLR",
-  "2lss_1tau_Tallinn",
+  #"2lss_1tau_Tallinn",
   ##"3l_1tau_LLR",
-  "3l_1tau_Tallinn",
+  #"3l_1tau_Tallinn",
+  "2l_2tau_Tallinn",
+  #"2los_2tau_Tallinn",
+  #"2lss_2tau_Tallinn",
 ]
 
 shapeVariables = {
@@ -20,6 +23,9 @@ shapeVariables = {
   "2lss_1tau_Tallinn" : [ "mvaDiscr_2lss" ],
   "3l_1tau_LLR"       : [ "mvaDiscr_3l" ],
   "3l_1tau_Tallinn"   : [ "mvaDiscr_3l" ],
+  "2l_2tau_Tallinn"   : [ "mvaDiscr_2l" ],
+  "2lss_2tau_Tallinn"   : [ "mvaDiscr_2l" ],
+  "2los_2tau_Tallinn"   : [ "mvaDiscr_2l" ],
 }
 
 datacardFiles = {
@@ -28,9 +34,16 @@ datacardFiles = {
   "1l_2tau_Tallinn"   : "Tallinn/datacard_mvis_1l2tau_12.9fb_2017Jan13.root",
   "2lss_1tau_Cornell" : "Cornell/ttH_2lss_1tau.input.root",
   "2lss_1tau_LLR"     : "LLR/datacard_MVA_2lSS_1tau_nofaketau_syst_12.9fb_2017Jan13.root",
-  "2lss_1tau_Tallinn" : "Tallinn/datacard_MVA_2lSS_1tau_nofaketau_12.9fb_2017Jan13.root",
+#  "2lss_1tau_Tallinn" : "Tallinn/datacard_MVA_2lSS_1tau_nofaketau_12.9fb_2017Jan13.root",
+#  "2lss_1tau_Tallinn" : "Tallinn/ttH_2lss_1tau_35.9fb_mvaDiscr_2lss_2017Feb24.input.root",
+  "2lss_1tau_Tallinn" : "prepareDatacards_3l_1tau_mvaDiscr_3l.root",
   "3l_1tau_LLR"       : "LLR/datacard_MVA_3l_1tau_12.9fb_2017Jan13.root",
-  "3l_1tau_Tallinn"   : "Tallinn/datacard_MVA_3l_1tau_nofaketau_12.9fb_2017Jan13.root",
+#  "3l_1tau_Tallinn"   : "Tallinn/datacard_MVA_3l_1tau_nofaketau_12.9fb_2017Jan13.root",
+#  "3l_1tau_Tallinn"   : "3l_1tau/prepareDatacards_3l_1tau_mTauTauVis.root",
+  "3l_1tau_Tallinn"   : "3l_1tau/addSystDatacards_3l_1tau_mvaDiscr_3l.root",
+  "2l_2tau_Tallinn"   : "2017Oct24/datacards/2l_2tau/prepareDatacards_2l_2tau_mTauTauVis.root",
+  "2los_2tau_Tallinn"   : "2017Oct31/datacards/2los_2tau/prepareDatacards_2los_2tau_lepOS_mTauTauVis.root",
+  "2lss_2tau_Tallinn"   : "2017Oct31/datacards/2lss_2tau/prepareDatacards_2lss_2tau_lepSS_mTauTauVis.root",
 }
 
 WriteDatacard_executables = {
@@ -42,6 +55,9 @@ WriteDatacard_executables = {
   "2lss_1tau_Tallinn" : 'WriteDatacards_2lss_1tau',
   "3l_1tau_LLR"       : 'WriteDatacards_3l_1tau',
   "3l_1tau_Tallinn"   : 'WriteDatacards_3l_1tau',
+  "2l_2tau_Tallinn"   : 'WriteDatacards_2l_2tau',
+  "2los_2tau_Tallinn"   : 'WriteDatacards_2los_2tau',
+  "2lss_2tau_Tallinn"   : 'WriteDatacards_2lss_2tau',
 }
 
 makePostFitPlots_macros = {
@@ -53,6 +69,9 @@ makePostFitPlots_macros = {
   "2lss_1tau_Tallinn" : 'makePostFitPlots_2lss_1tau.C',
   "3l_1tau_LLR"       : 'makePostFitPlots_3l_1tau.C',
   "3l_1tau_Tallinn"   : 'makePostFitPlots_3l_1tau.C',
+  "2l_2tau_Tallinn"   : 'makePostFitPlots_2l_2tau.C',
+  "2los_2tau_Tallinn"   : 'makePostFitPlots_2los_2tau.C',
+  "2lss_2tau_Tallinn"   : 'makePostFitPlots_2lss_2tau.C',
 }    
 
 def run_cmd(command):
@@ -62,12 +81,16 @@ def run_cmd(command):
   return stdout
 
 workingDir = os.getcwd()
-datacardDir = "/home/veelken/public/HIG16022_datacards/"
+#datacardDir = "/home/veelken/public/HIG16022_datacards/"
+#datacardDir = "/home/sbhowmik/LimitCalculation/CMSSW_7_4_7/src/CombineHarvester/ttH_htt//HIG16022_datacards/"
+#datacardDir = "/home/sbhowmik/ttHAnalysis_171018/2016/2017Oct04/datacards/"
+datacardDir = "/home/sbhowmik/ttHAnalysis/2016/"
 
 for channel in channels:
   for shapeVariable in shapeVariables[channel]:
     channel_base = None
-    for search_string in [ "1l_2tau", "2lss_1tau", "3l_1tau" ]:
+    for search_string in [ "1l_2tau", "2lss_1tau", "3l_1tau", "2l_2tau", "2los_2tau", "2lss_2tau" ]:
+#    for search_string in [ "1l_2tau", "2lss_1tau", "3l_1tau"]:
       if channel.find(search_string) != -1:
         channel_base = search_string
     ##datacardFile_input = os.path.join(datacardDir, channel_base, datacardFiles[channel] % shapeVariable)
