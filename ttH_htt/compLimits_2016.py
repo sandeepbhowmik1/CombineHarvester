@@ -10,8 +10,8 @@ channels = [
   ##"3l_1tau_LLR",
   #"3l_1tau_Tallinn",
   "2l_2tau_Tallinn",
-  "2los_2tau_Tallinn",
-  "2lss_2tau_Tallinn",
+  #"2los_2tau_Tallinn",
+  #"2lss_2tau_Tallinn",
 ]
 
 shapeVariables = {
@@ -43,7 +43,7 @@ datacardFiles = {
   "3l_1tau_Tallinn"   : "3l_1tau/addSystDatacards_3l_1tau_mvaDiscr_3l.root",
 #  "2l_2tau_Tallinn"   : "2l_2tau/prepareDatacards_2l_2tau_mTauTauVis.root",
 #  "2l_2tau_Tallinn"   : "2017Oct31/datacards/2los_2tau/prepareDatacards_2los_2tau_lepOS_mTauTauVis.root",
-  "2l_2tau_Tallinn"   : "ttHAnalysis_171018/2016/2017Oct04/datacards/2l_2tau/prepareDatacards_2l_2tau_mTauTauVis.root",
+  "2l_2tau_Tallinn"   : "prepareDatacards_2l_2tau_mTauTauVis.root",
   "2los_2tau_Tallinn"   : "ttHAnalysis/2016/2017Oct31/datacards/2los_2tau/prepareDatacards_2los_2tau_lepOS_mTauTauVis.root",
   "2lss_2tau_Tallinn"   : "ttHAnalysis/2016/2017Oct31/datacards/2lss_2tau/prepareDatacards_2lss_2tau_lepSS_mTauTauVis.root",
 }
@@ -86,7 +86,7 @@ workingDir = os.getcwd()
 #datacardDir = "/home/veelken/public/HIG16022_datacards/"
 #datacardDir = "/home/sbhowmik/LimitCalculation/CMSSW_7_4_7/src/CombineHarvester/ttH_htt//HIG16022_datacards/"
 #datacardDir = "/home/sbhowmik/ttHAnalysis_171018/2016/2017Oct04/datacards/"
-datacardDir = "/home/sbhowmik/"
+datacardDir = "/home/karmakar/ttHAnalysis/2016/2017Oct23/datacards/2l_2tau/"
 
 for channel in channels:
   for shapeVariable in shapeVariables[channel]:

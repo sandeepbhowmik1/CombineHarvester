@@ -187,12 +187,12 @@ int main(int argc, char** argv) {
   //! [part7]
   cb.cp().backgrounds().ExtractShapes(
       aux_shapes + input_file.data(),
-      "x_$PROCESS",
-      "x_$PROCESS_$SYSTEMATIC");
+      "$PROCESS",
+      "$PROCESS_$SYSTEMATIC");
   cb.cp().signals().ExtractShapes(
       aux_shapes + input_file.data(),
-      "x_$PROCESS",
-      "x_$PROCESS_$SYSTEMATIC");
+      "$PROCESS",
+      "$PROCESS_$SYSTEMATIC");
   //! [part7]
 
   // CV: scale yield of all signal and background processes by lumi/2.3,
